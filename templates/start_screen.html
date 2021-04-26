@@ -1,6 +1,13 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+
+    <label for='current_score'>Current score:</label>&nbsp;
+    <input class="current_score" id='current_score' value="0" disabled>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label for='high_score'>Highest score:</label>&nbsp;
+    <input class="high_score" id="high_score" value="1042232" disabled>
+
     <div class="playfield">
         {% for row in range(rows) %}
                     <div class="table_row" data-row = {{ row }}>
