@@ -1,5 +1,32 @@
 body {
-    background-color: purple;
-    font-size: 200px;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    background-color: white;
+    font-size: 20px;
     color: white;
+}
+
+.playfield {
+   display: table;
+    position: absolute;
+    top: 50px;
+    width: 1250px;
+    height: 625px;
+}
+
+.table_row {
+    display: table-row;
+}
+.table_col:empty {
+    display: table-cell;
+
+}
+
+.dark {
+    background-color: darkgreen;
+}
+
+.light {
+    background-color: green;
 }

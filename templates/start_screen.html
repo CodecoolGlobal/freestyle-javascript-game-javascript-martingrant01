@@ -1,8 +1,32 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    {% for foo in range(num) %}
-            kaki
-    {% endfor %}
+    <div class="playfield">
+        {% for row in range(rows) %}
+                    <div class="table_row" data-row = {{ row }}>
+                {% if row % 2 == 0 %}
+                    {% for col in range(cols) %}
+                        {% if col % 2 == 0 %}
+                            <div class="table_col light" data-col = {{ col }}></div>
+                        {% else %}
+                            <div class="table_col dark" data-col = {{ col }}></div>
+                        {% endif %}
 
-{% endblock %}g
+                    {% endfor %}
+                {% else %}
+                    {% for col in range(cols) %}
+                        {% if col % 2 == 0 %}
+                            <div class="table_col dark" data-col = {{ col }}></div>
+                        {% else %}
+                            <div class="table_col light" data-col = {{ col }}></div>
+                        {% endif %}
+
+                    {% endfor %}
+                {% endif %}
+
+                </div>
+        {% endfor %}
+    </div>
+
+
+{% endblock %}

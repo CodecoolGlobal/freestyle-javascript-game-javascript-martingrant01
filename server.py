@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def game():
-    return render_template('start_screen.html', num=2)
+    return render_template('start_screen.html', rows=20, cols=30, k='kk')
 
 
 if __name__ == '__main__':
