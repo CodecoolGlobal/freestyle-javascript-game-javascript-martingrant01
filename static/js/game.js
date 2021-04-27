@@ -42,45 +42,51 @@ window.onload = function initGame() {
                 window.addEventListener('keydown', function (event){
                         event.preventDefault();
 
-                        console.log(event.code)
-                        function new_key(event) {
-                                let keykeys = ['KeyS', 'ArrowDown', 'KeyW', 'ArrowUp', 'KeyA', 'ArrowLeft', 'KeyD', 'ArrowRight']
-                                for (let keykey of keykeys) {
-                                        if (event.code == keykey) clearInterval(timer);
+                        function check_valid_key () {
+                                let valid_keys = ['KeyS', 'ArrowDown', 'KeyW', 'ArrowUp', 'KeyA', 'ArrowLeft', 'KeyD', 'ArrowRight'];
+                                for (let valid_key of valid_keys) {
+                                        if (event.code == valid_key) {
+                                                move_the_snake();
+                                        }
+                                }
+                                function move_the_snake () {
+                                        clearInterval(timer);
+
+                                                timer = setInterval( function() {
+                                                switch (event.code) {
+                                                        case 'KeyS':
+                                                        case 'ArrowDown':
+                                                                //console.log('back');
+                                                                move(fields,'row', 1);
+                                                                break;
+                                                        case 'KeyW':
+                                                        case 'ArrowUp':
+                                                                //console.log('up');
+                                                                move(fields,'row', -1);
+                                                                break;
+                                                        case 'KeyA':
+                                                        case 'ArrowLeft':
+                                                                //console.log('left');
+                                                                move(fields,'col', -1);
+                                                                break;
+                                                        case 'KeyD':
+                                                        case 'ArrowRight':
+                                                                //console.log('right');
+                                                                move(fields,'col', 1);
+                                                                break;
+                                                        default:
+                                                                return;
+                                                }
+                                                }, 200)
                                 }
 
                         }
-                        new_key(event);
-                        timer = setInterval( function() {
-                                switch (event.code) {
-                                        case 'KeyS':
-                                        case 'ArrowDown':
-                                                //console.log('back');
-                                                move(fields,'row', 1);
-                                                break;
-                                        case 'KeyW':
-                                        case 'ArrowUp':
-                                                //console.log('up');
-                                                move(fields,'row', -1);
-                                                break;
-                                        case 'KeyA':
-                                        case 'ArrowLeft':
-                                                //console.log('left');
-                                                move(fields,'col', -1);
-                                                break;
-                                        case 'KeyD':
-                                        case 'ArrowRight':
-                                                //console.log('right');
-                                                move(fields,'col', 1);
-                                                break;
-                                }
-                        }, 200)
 
-
+                        check_valid_key();
 
                 },
 
-        )};
+        )}
 }
 
 
