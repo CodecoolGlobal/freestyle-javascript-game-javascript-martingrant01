@@ -5,8 +5,8 @@ function initGame() {
 
 }
 
-
-function initCreateBorder() {
+/*
+function initCreateBorde() {
     let last_row = document.querySelectorAll('.table_row');
 
     let border_cells = document.querySelectorAll(`[data-row= '0'] [data-row= ${CSS.escape((last_row.length - 1).toString())}]`);
@@ -18,6 +18,6 @@ function initCreateBorder() {
     }
 
 }
-
+*/
 
 initGame();

@@ -22,7 +22,7 @@ body {
     display: table-cell;
 }
 .table_col.table_border {
-    background-color: brown;
+    background-color: #654321;
 }
 
 .dark {
