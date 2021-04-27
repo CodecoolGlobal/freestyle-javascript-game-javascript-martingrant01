@@ -8,24 +8,24 @@
     <label for='high_score'>Highest score:</label>&nbsp;
     <input class="high_score" id="high_score" value="1042232" disabled>
 
-    <div class="playfield">
+    <div class="play_field">
         {% for row in range(rows) %}
-                    <div class="table_row" data-row = {{ row }}>
+                    <div class="table_row">
                 {% if row % 2 == 0 %}
                     {% for col in range(cols) %}
                         {% if col % 2 == 0 %}
-                            <div class="table_col light" data-col = {{ col }}></div>
+                            <div class="table_col light" data-row ='{{ row }}' data-col = {{ col }}></div>
                         {% else %}
-                            <div class="table_col dark" data-col = {{ col }}></div>
+                            <div class="table_col dark" data-row = '{{ row }}' data-col = {{ col }}></div>
                         {% endif %}
 
                     {% endfor %}
                 {% else %}
                     {% for col in range(cols) %}
                         {% if col % 2 == 0 %}
-                            <div class="table_col dark" data-col = {{ col }}></div>
+                            <div class="table_col dark" data-row = '{{ row }}' data-col = {{ col }}></div>
                         {% else %}
-                            <div class="table_col light" data-col = {{ col }}></div>
+                            <div class="table_col light" data-row = '{{ row }}' data-col = {{ col }}></div>
                         {% endif %}
 
                     {% endfor %}

@@ -7,7 +7,7 @@ body {
     color: black;
 }
 
-.playfield {
+.play_field {
    display: table;
     position: absolute;
     top: 50px;
@@ -20,7 +20,9 @@ body {
 }
 .table_col:empty {
     display: table-cell;
-
+}
+.table_col.table_border {
+    background-color: brown;
 }
 
 .dark {
