@@ -8,7 +8,7 @@
     <label for='high_score'>Highest score:</label>&nbsp;
     <input class="high_score" id="high_score" value="1042232" disabled>
 
-    <div class="play_field">
+    <div class="play_field" data-all_rows = '{{ rows }}' data-all_cols = '{{ cols }}'>
         {% for row in range(rows) %}
                     <div class="table_row">
                 {% if row % 2 == 0 %}
