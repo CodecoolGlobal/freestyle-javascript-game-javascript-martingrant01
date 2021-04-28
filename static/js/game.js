@@ -1,7 +1,5 @@
 window.onload = function initGame() {
-        let timer;
         let fields = document.querySelectorAll('.table_col');
-        clearInterval(timer)
 
         createSnake(fields)
         snakeMovement(fields)
@@ -15,30 +13,50 @@ window.onload = function initGame() {
                                 field.classList.add('snake');
                                 field.setAttribute('id', 'snake-head');
                         }
+                        if (field.dataset.row === '5' && field.dataset.col === '4') {
+                                field.classList.add('snake');
+                        }
+                        if (field.dataset.row === '5' && field.dataset.col === '3') {
+                                field.classList.add('snake');
+                                field.setAttribute('id', 'snake-end');
+                        }
                 }
         }
 
         function snakeMovement(fields) {
                 function move(fields, direction, change) {
+                        let snake = document.querySelectorAll('.snake');
                         let snakeHead = document.querySelector('#snake-head');
                         let snakeHeadPosition = {
                                 row: parseInt(snakeHead.dataset.row),
                                 col: parseInt(snakeHead.dataset.col)
                         }
 
+                        let snakeEnd = document.querySelector('#snake-end');
+                        /*
+                        let snakeEndPosition = {
+                                row: parseInt(snakeEnd.dataset.row),
+                                col: parseInt(snakeEnd.dataset.col)
+                        }
+                        */
+
                         if (direction === 'col' ? snakeHeadPosition.col += change : snakeHeadPosition.row += change) ;
+
+                        let nextSnakeEndPosition = {
+                                row: parseInt(snakeEnd.dataset.row),
+                                col: parseInt(snakeEnd.dataset.col)
+                        }
+                        //if (direction === 'col' ? nextSnakeEndPosition.col += change : nextSnakeEndPosition.row += change) ;
 
                         function checkNextField() {
                                 for (let field of fields) {
                                         if (field.dataset.col == snakeHeadPosition.col && field.dataset.row == snakeHeadPosition.row) {
                                                 if (field.classList['value'].includes('table_border')) {
                                                         if (confirm('Play again?')) {
-                                                                console.log('5564')
                                                                 window.location.replace('/')
                                                         } else {clearInterval(timer)};
                                                 }
                                                 if (field.classList['value'].includes('apple')){
-                                                        console.log('apple')
                                                         field.classList.remove('apple')
                                                         place_apple_on_map()
                                                 }
@@ -49,15 +67,29 @@ window.onload = function initGame() {
 
                         checkNextField();
 
-                        snakeHead.classList.remove('snake');
+                        //snakeHead.classList.remove('snake');
                         snakeHead.removeAttribute('id');
+                        // snakeEnd.removeAttribute('id');
 
                         function moveSnakeHead() {
                                 for (let field of fields) {
                                         if (field.dataset.col == snakeHeadPosition.col && field.dataset.row == snakeHeadPosition.row) {
                                                 field.classList.add('snake');
                                                 field.setAttribute('id', 'snake-head');
+                                                snake[0].removeAttribute('id');
+                                                snake[0].classList.remove('snake');
+                                                snake[1].setAttribute('id', 'snake-end');
                                         }
+                                        /*
+
+                                        if (field.dataset.col == snakeEndPosition.col && field.dataset.row == snakeEndPosition.row) {
+                                                field.classList.remove('snake');
+                                        }
+
+                                        if (field.dataset.col == nextSnakeEndPosition.col && field.dataset.row == nextSnakeEndPosition.row) {
+                                                field.setAttribute('id', 'snake-end');
+                                        }*/
+
                                 }
 
                         }
@@ -66,7 +98,7 @@ window.onload = function initGame() {
 
 
                 }
-
+                let timer;
                 window.addEventListener('keydown', function (event) {
                             event.preventDefault();
 
@@ -85,22 +117,18 @@ window.onload = function initGame() {
                                                     switch (event.code) {
                                                             case 'KeyS':
                                                             case 'ArrowDown':
-                                                                    //console.log('back');
                                                                     move(fields, 'row', 1);
                                                                     break;
                                                             case 'KeyW':
                                                             case 'ArrowUp':
-                                                                    //console.log('up');
                                                                     move(fields, 'row', -1);
                                                                     break;
                                                             case 'KeyA':
                                                             case 'ArrowLeft':
-                                                                    //console.log('left');
                                                                     move(fields, 'col', -1);
                                                                     break;
                                                             case 'KeyD':
                                                             case 'ArrowRight':
-                                                                    //console.log('right');
                                                                     move(fields, 'col', 1);
                                                                     break;
                                                             default:
@@ -138,7 +166,6 @@ window.onload = function initGame() {
 
 
                 let place_of_apple = cells[random_cell];
-                console.log(place_of_apple);
                 place_of_apple.classList.add('apple');
 
 
