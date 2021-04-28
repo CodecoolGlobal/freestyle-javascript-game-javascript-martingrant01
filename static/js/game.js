@@ -1,9 +1,12 @@
 window.onload = function initGame() {
+        let timer;
         let fields = document.querySelectorAll('.table_col');
+        clearInterval(timer)
 
         createSnake(fields)
         snakeMovement(fields)
         place_apple_on_map();
+
 
         function createSnake(fields) {
 
@@ -29,7 +32,10 @@ window.onload = function initGame() {
                                 for (let field of fields) {
                                         if (field.dataset.col == snakeHeadPosition.col && field.dataset.row == snakeHeadPosition.row) {
                                                 if (field.classList['value'].includes('table_border')) {
-                                                        alert('You Lose!');
+                                                        if (confirm('Play again?')) {
+                                                                console.log('5564')
+                                                                window.location.replace('/')
+                                                        } else {clearInterval(timer)};
                                                 }
                                                 if (field.classList['value'].includes('apple')){
                                                         console.log('apple')
@@ -61,7 +67,6 @@ window.onload = function initGame() {
 
                 }
 
-                let timer;
                 window.addEventListener('keydown', function (event) {
                             event.preventDefault();
 
@@ -138,6 +143,7 @@ window.onload = function initGame() {
 
 
         }
+
 }
 
 
