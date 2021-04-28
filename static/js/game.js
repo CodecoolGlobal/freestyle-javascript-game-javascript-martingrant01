@@ -1,10 +1,8 @@
 window.onload = function initGame() {
-        let timer;
         let fields = document.querySelectorAll('.table_col');
-        clearInterval(timer)
 
-        createSnake(fields)
-        snakeMovement(fields)
+        createSnake(fields);
+        snakeMovement(fields);
         place_apple_on_map();
 
 
@@ -19,6 +17,7 @@ window.onload = function initGame() {
         }
 
         function snakeMovement(fields) {
+
                 function move(fields, direction, change) {
                         let snakeHead = document.querySelector('#snake-head');
                         let snakeHeadPosition = {
@@ -29,18 +28,46 @@ window.onload = function initGame() {
                         if (direction === 'col' ? snakeHeadPosition.col += change : snakeHeadPosition.row += change) ;
 
                         function checkNextField() {
+
+                                function increase_current_score(score) {
+
+                                        let increased_score = parseInt(score.value) + 1
+
+                                        score.value = increased_score
+
+                                }
+                                function set_high_score(high_score) {
+
+                                        let increased_score = parseInt(high_score.value) + 1;
+
+                                        high_score.value = increased_score;
+                                }
+
                                 for (let field of fields) {
                                         if (field.dataset.col == snakeHeadPosition.col && field.dataset.row == snakeHeadPosition.row) {
                                                 if (field.classList['value'].includes('table_border')) {
-                                                        if (confirm('Play again?')) {
+                                                        let high_score = document.querySelector('#high_score');
+
+                                                        if (confirm(`Play again? \n Highest score was ${high_score.value}`)) {
                                                                 console.log('5564')
                                                                 window.location.replace('/')
-                                                        } else {clearInterval(timer)};
-                                                }
+                                                        }
+                                                        else {
+                                                                clearInterval(timer)}
+                                                        }
+
                                                 if (field.classList['value'].includes('apple')){
-                                                        console.log('apple')
-                                                        field.classList.remove('apple')
-                                                        place_apple_on_map()
+                                                        let score  = document.querySelector('#current_score');
+                                                        let high_score = document.querySelector('#high_score');
+
+                                                        increase_current_score(score);
+
+                                                        if (high_score.value < score.value) {
+                                                                set_high_score(high_score);
+                                                        }
+
+                                                        field.classList.remove('apple');
+                                                        place_apple_on_map();
                                                 }
 
                                         }
@@ -66,7 +93,7 @@ window.onload = function initGame() {
 
 
                 }
-
+                let timer;
                 window.addEventListener('keydown', function (event) {
                             event.preventDefault();
 
@@ -138,7 +165,6 @@ window.onload = function initGame() {
 
 
                 let place_of_apple = cells[random_cell];
-                console.log(place_of_apple);
                 place_of_apple.classList.add('apple');
 
 
