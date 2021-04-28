@@ -31,6 +31,11 @@ window.onload = function initGame() {
                                                 if (field.classList['value'].includes('table_border')) {
                                                         alert('You Lose!');
                                                 }
+                                                if (field.classList['value'].includes('apple')){
+                                                        console.log('apple')
+                                                        field.classList.remove('apple')
+                                                        place_apple_on_map()
+                                                }
 
                                         }
                                 }
@@ -129,7 +134,6 @@ window.onload = function initGame() {
 
                 let place_of_apple = cells[random_cell];
                 console.log(place_of_apple);
-                place_of_apple.classList.remove('light', 'dark');
                 place_of_apple.classList.add('apple');
 
 
