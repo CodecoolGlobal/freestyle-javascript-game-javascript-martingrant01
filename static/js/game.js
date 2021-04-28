@@ -25,17 +25,35 @@ window.onload = function initGame() {
 
                         if (direction === 'col' ? snakeHeadPosition.col += change : snakeHeadPosition.row += change) ;
 
+                        function checkNextField() {
+                                for (let field of fields) {
+                                        if (field.dataset.col == snakeHeadPosition.col && field.dataset.row == snakeHeadPosition.row) {
+                                                if (field.classList['value'].includes('table_border')) {
+                                                        alert('You Lose!');
+                                                }
+
+                                        }
+                                }
+                        }
+
+                        checkNextField();
+
                         snakeHead.classList.remove('snake');
                         snakeHead.removeAttribute('id');
 
-
-                        for (let field of fields) {
-                                if (field.dataset.col == snakeHeadPosition.col && field.dataset.row == snakeHeadPosition.row) {
-                                        //console.log(snakeHeadPosition)
-                                        field.classList.add('snake');
-                                        field.setAttribute('id', 'snake-head');
+                        function moveSnakeHead() {
+                                for (let field of fields) {
+                                        if (field.dataset.col == snakeHeadPosition.col && field.dataset.row == snakeHeadPosition.row) {
+                                                field.classList.add('snake');
+                                                field.setAttribute('id', 'snake-head');
+                                        }
                                 }
+
                         }
+
+                        moveSnakeHead()
+
+
                 }
 
                 let timer;
@@ -46,11 +64,11 @@ window.onload = function initGame() {
                                     let valid_keys = ['KeyS', 'ArrowDown', 'KeyW', 'ArrowUp', 'KeyA', 'ArrowLeft', 'KeyD', 'ArrowRight'];
                                     for (let valid_key of valid_keys) {
                                             if (event.code == valid_key) {
-                                                    move_the_snake();
+                                                    directionOfSnake();
                                             }
                                     }
 
-                                    function move_the_snake() {
+                                    function directionOfSnake() {
                                             clearInterval(timer);
 
                                             timer = setInterval(function () {
