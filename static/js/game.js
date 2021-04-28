@@ -65,36 +65,52 @@ window.onload = function initGame() {
                                 for (let field of fields) {
                                         if (field.dataset.col == snakeHeadPosition.col && field.dataset.row == snakeHeadPosition.row) {
 
-
-
                                                 field.classList.add('snake');
                                                 field.setAttribute('id', 'snake-head');
                                                 snake = document.querySelectorAll('.snake');
-                                                console.log(snake);
-                                                debugger;
+                                                let previous_snake_end_index;
+
+                                                for (let index=0; index<snake.length ; index++) {
+                                                        if (snake[index].id === 'snake-end') {
+                                                                 previous_snake_end_index = index;
+                                                        }
+                                                }
+
+
                                                 let head_index, end_index, next_index;
 
                                                 for (let index=0; index<snake.length ; index++) {
                                                         if (snake[index].id === 'snake-head') {
                                                                 head_index = index
 
-                                                                if (head_index === snake.length - 1) {
-                                                                        end_index =  0
+                                                                // right, down
+                                                                if (head_index == snake.length - 1) {
+                                                                        end_index = 0
                                                                         next_index = 0
                                                                 }
-                                                                else if (head_index === 0) {
-                                                                        end_index = 1;
-                                                                        next_index = 1;
+                                                                // up, left
+                                                                else if (head_index == 0) {
+                                                                        if (previous_snake_end_index == snake.length - 1) {
+                                                                                end_index = previous_snake_end_index
+                                                                                next_index = snake.length - 2
+                                                                        } else {
+                                                                                end_index = previous_snake_end_index;
+                                                                                next_index = previous_snake_end_index;
+                                                                        }
                                                                 }
+
+
 
                                                         }
                                                 }
-                                                
+
                                                 snake[end_index].removeAttribute('id');
                                                 snake[end_index].classList.remove('snake');
 
                                                 snake = document.querySelectorAll('.snake');
                                                 snake[next_index].setAttribute('id', 'snake-end');
+                                                console.log(end_index, next_index)
+                                                console.log(snake);
 
 
 
@@ -144,7 +160,7 @@ window.onload = function initGame() {
                                                             default:
                                                                     return;
                                                     }
-                                            }, 200)
+                                            }, 300)
                                     }
 
                             }
