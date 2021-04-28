@@ -18,6 +18,9 @@ window.onload = function initGame() {
                         }
                         if (field.dataset.row === '5' && field.dataset.col === '3') {
                                 field.classList.add('snake');
+                        }
+                        if (field.dataset.row === '5' && field.dataset.col === '2') {
+                                field.classList.add('snake');
                                 field.setAttribute('id', 'snake-end');
                         }
                 }
@@ -32,21 +35,8 @@ window.onload = function initGame() {
                                 col: parseInt(snakeHead.dataset.col)
                         }
 
-                        let snakeEnd = document.querySelector('#snake-end');
-                        /*
-                        let snakeEndPosition = {
-                                row: parseInt(snakeEnd.dataset.row),
-                                col: parseInt(snakeEnd.dataset.col)
-                        }
-                        */
-
                         if (direction === 'col' ? snakeHeadPosition.col += change : snakeHeadPosition.row += change) ;
 
-                        let nextSnakeEndPosition = {
-                                row: parseInt(snakeEnd.dataset.row),
-                                col: parseInt(snakeEnd.dataset.col)
-                        }
-                        //if (direction === 'col' ? nextSnakeEndPosition.col += change : nextSnakeEndPosition.row += change) ;
 
                         function checkNextField() {
                                 for (let field of fields) {
@@ -54,7 +44,7 @@ window.onload = function initGame() {
                                                 if (field.classList['value'].includes('table_border')) {
                                                         if (confirm('Play again?')) {
                                                                 window.location.replace('/')
-                                                        } else {clearInterval(timer)};
+                                                        } else {clearInterval(timer)}
                                                 }
                                                 if (field.classList['value'].includes('apple')){
                                                         field.classList.remove('apple')
@@ -74,22 +64,42 @@ window.onload = function initGame() {
                         function moveSnakeHead() {
                                 for (let field of fields) {
                                         if (field.dataset.col == snakeHeadPosition.col && field.dataset.row == snakeHeadPosition.row) {
+
+
+
                                                 field.classList.add('snake');
                                                 field.setAttribute('id', 'snake-head');
-                                                snake[0].removeAttribute('id');
-                                                snake[0].classList.remove('snake');
-                                                snake[1].setAttribute('id', 'snake-end');
+                                                snake = document.querySelectorAll('.snake');
+                                                console.log(snake);
+                                                debugger;
+                                                let head_index, end_index, next_index;
+
+                                                for (let index=0; index<snake.length ; index++) {
+                                                        if (snake[index].id === 'snake-head') {
+                                                                head_index = index
+
+                                                                if (head_index === snake.length - 1) {
+                                                                        end_index =  0
+                                                                        next_index = 0
+                                                                }
+                                                                else if (head_index === 0) {
+                                                                        end_index = 1;
+                                                                        next_index = 1;
+                                                                }
+
+                                                        }
+                                                }
+                                                
+                                                snake[end_index].removeAttribute('id');
+                                                snake[end_index].classList.remove('snake');
+
+                                                snake = document.querySelectorAll('.snake');
+                                                snake[next_index].setAttribute('id', 'snake-end');
+
+
+
+                                                break;
                                         }
-                                        /*
-
-                                        if (field.dataset.col == snakeEndPosition.col && field.dataset.row == snakeEndPosition.row) {
-                                                field.classList.remove('snake');
-                                        }
-
-                                        if (field.dataset.col == nextSnakeEndPosition.col && field.dataset.row == nextSnakeEndPosition.row) {
-                                                field.setAttribute('id', 'snake-end');
-                                        }*/
-
                                 }
 
                         }
