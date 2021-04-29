@@ -57,10 +57,13 @@ window.onload = function initGame() {
 
 
                         function moveSnakeHead() {
+                                let snake = document.querySelectorAll('[data-pos]');
 
-                                console.log(snake)
-                                debugger;
+
                                 for (let snake_part of snake) {
+                                        let snake_part_pos = snake_part.dataset.pos
+
+                                        snake_part.removeAttribute('data-pos');
                                         snake_part.classList.remove('snake');
 
                                         let snake_col = parseInt(snake_part.dataset.col);
@@ -71,6 +74,7 @@ window.onload = function initGame() {
                                         for (let field of fields) {
                                                 if (field.dataset.col == snake_col && field.dataset.row == snake_row) {
                                                         field.classList.add('snake');
+                                                        field.setAttribute('data-pos', snake_part_pos);
                                                 }
                                         }
                                 }
