@@ -274,6 +274,7 @@ window.onload = function initGame() {
 
                 let place_of_special = cells[random_cell];
                 place_of_special.classList.add('special');
+                setTimeout(function() {place_of_special.classList.remove('special');}, 5000)
         }
 
 }
