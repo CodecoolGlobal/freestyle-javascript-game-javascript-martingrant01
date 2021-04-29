@@ -81,28 +81,36 @@ window.onload = function initGame() {
 
                         //snakeHead.classList.remove('snake');
                         snakeHead.removeAttribute('id');
-                        snakeHead.removeAttribute('data-pos');
+                        //snakeHead.removeAttribute('data-pos');
                         // snakeEnd.removeAttribute('id');
 
                         function moveSnakeHead() {
                                 for (let field of fields) {
+                                        if (field.dataset.pos) {
+                                                let increasedPos = field.dataset.pos
+                                                increasedPos ++
+                                                field.dataset.pos = increasedPos
+                                        }
+
                                         if (field.dataset.col == snakeHeadPosition.col && field.dataset.row == snakeHeadPosition.row) {
 
                                                 field.classList.add('snake');
                                                 field.setAttribute('id', 'snake-head');
                                                 field.setAttribute('data-pos', 0);
-                                                console.log(snake)
-                                                debugger;
-
-                                                /*snake[end_index].removeAttribute('id');
-                                                snake[end_index].classList.remove('snake');
-                                                snake[next_index].setAttribute('id', 'snake-end');*/
-                                                //console.log(end_index, next_index)
-                                                //console.log(snake);
 
 
 
-                                                break;
+                                        }
+                                        if (field.dataset.col == snake[0].dataset.col && field.dataset.row == snake[0].dataset.row) {
+
+                                                field.classList.remove('snake');
+                                                field.removeAttribute('id', 'snake-end');
+                                                field.removeAttribute('data-pos');
+
+                                        }
+                                        if (field.dataset.col == snake[1].dataset.col && field.dataset.row == snake[1].dataset.row) {
+
+                                                field.setAttribute('id', 'snake-end');
                                         }
                                 }
 
