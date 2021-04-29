@@ -33,7 +33,6 @@ window.onload = function initGame() {
         function sortPosition() {
                 let snake = Array.from(document.querySelectorAll('.snake'));
                 let orderedSnakeList = [];
-                //let snakeLength = snake.length;
                 let maxElementIndex;
                 while (orderedSnakeList.length < snake.length) {
                         let maxElement = snake[0];
@@ -46,12 +45,12 @@ window.onload = function initGame() {
                         orderedSnakeList.push(maxElement);
                         snake.splice(maxElementIndex, 1);
                 }
+                return orderedSnakeList
         }
 
         function snakeMovement(fields) {
                 function move(fields, direction, change) {
-                        let snake = document.querySelectorAll('.snake');
-                        sortPosition();
+                        let snake = sortPosition();
                         let snakeHead = document.querySelector('#snake-head');
                         let snakeHeadPosition = {
                                 row: parseInt(snakeHead.dataset.row),
@@ -82,6 +81,7 @@ window.onload = function initGame() {
 
                         //snakeHead.classList.remove('snake');
                         snakeHead.removeAttribute('id');
+                        snakeHead.removeAttribute('data-pos');
                         // snakeEnd.removeAttribute('id');
 
                         function moveSnakeHead() {
@@ -90,48 +90,13 @@ window.onload = function initGame() {
 
                                                 field.classList.add('snake');
                                                 field.setAttribute('id', 'snake-head');
-                                                snake = document.querySelectorAll('.snake');
-                                                let previous_snake_end_index;
+                                                field.setAttribute('data-pos', 0);
+                                                console.log(snake)
+                                                debugger;
 
-                                                for (let index=0; index<snake.length ; index++) {
-                                                        if (snake[index].id === 'snake-end') {
-                                                                 previous_snake_end_index = index;
-                                                        }
-                                                }
-
-
-                                                let head_index, end_index, next_index;
-
-                                                for (let index=0; index<snake.length ; index++) {
-                                                        if (snake[index].id === 'snake-head') {
-                                                                head_index = index
-
-                                                                // right, down
-                                                                if (head_index == snake.length - 1) {
-                                                                        end_index = 0
-                                                                        next_index = 0
-                                                                }
-                                                                // up, left
-                                                                else if (head_index == 0) {
-                                                                        if (previous_snake_end_index == snake.length - 1) {
-                                                                                end_index = previous_snake_end_index
-                                                                                next_index = snake.length - 2
-                                                                        } else {
-                                                                                end_index = previous_snake_end_index;
-                                                                                next_index = previous_snake_end_index;
-                                                                        }
-                                                                }
-
-
-
-                                                        }
-                                                }
-
-                                                snake[end_index].removeAttribute('id');
+                                                /*snake[end_index].removeAttribute('id');
                                                 snake[end_index].classList.remove('snake');
-
-                                                snake = document.querySelectorAll('.snake');
-                                                snake[next_index].setAttribute('id', 'snake-end');
+                                                snake[next_index].setAttribute('id', 'snake-end');*/
                                                 //console.log(end_index, next_index)
                                                 //console.log(snake);
 
