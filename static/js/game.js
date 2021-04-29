@@ -31,23 +31,21 @@ window.onload = function initGame() {
         }
 
         function sortPosition() {
-                let snake = document.querySelectorAll('.snake');
+                let snake = Array.from(document.querySelectorAll('.snake'));
                 let orderedSnakeList = [];
-                let snakeLength = snake.length;
+                //let snakeLength = snake.length;
                 let maxElementIndex;
-                while (orderedSnakeList.length < snakeLength) {
+                while (orderedSnakeList.length < snake.length) {
                         let maxElement = snake[0];
-                        for (let snakePartIndex=0; snakePartIndex < snakeLength; snakePartIndex++) {
+                        for (let snakePartIndex=0; snakePartIndex < snake.length; snakePartIndex++) {
                                 if (maxElement.dataset.pos < snake[snakePartIndex].dataset.pos) {
                                      maxElement = snake[snakePartIndex];
                                      maxElementIndex = snakePartIndex;
                                 }
                         }
                         orderedSnakeList.push(maxElement);
-                        snake = snake.splice(maxElementIndex, 1);
-                        console.log(orderedSnakeList)
+                        snake.splice(maxElementIndex, 1);
                 }
-
         }
 
         function snakeMovement(fields) {
