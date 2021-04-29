@@ -181,10 +181,9 @@ window.onload = function initGame() {
                 do {
                         random_cell = get_random_cell(cells.length);
 
-                } while (cells[random_cell].dataset.col == border_coords.max_col ||
-                cells[random_cell].dataset.col == border_coords.min_col ||
-                cells[random_cell].dataset.row == border_coords.min_row ||
-                cells[random_cell].dataset.row == border_coords.max_row);
+                } while (cells[random_cell].classList["value"].includes('table_border') ||
+                    cells[random_cell].classList["value"].includes('snake')
+                    );
 
 
                 let place_of_apple = cells[random_cell];
