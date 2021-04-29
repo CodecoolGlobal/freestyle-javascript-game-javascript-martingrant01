@@ -84,10 +84,16 @@ window.onload = function initGame() {
                                                         field.style.backgroundColor = 'purple';
 
                                                         setTimeout(() => {
-                                                                if (confirm(`Play again? \n Highest score was ${high_score.value}`)) {
+                                                                if (confirm(`Play again? \n Highest score was ${high_score.value}`))
+                                                                {
                                                                         window.location.replace('/')
                                                                 }
+                                                                else
+                                                                {
+                                                                        location.reload()
+                                                                }
                                                         }, 100);
+
                                                 }
 
                                                 if (field.classList['value'].includes('apple')) {
