@@ -78,7 +78,7 @@ window.onload = function initGame() {
 
                                 for (let field of fields) {
                                         if (field.dataset.col == snakeHeadPosition.col && field.dataset.row == snakeHeadPosition.row) {
-                                                if (field.classList['value'].includes('table_border')) {
+                                                if (field.classList['value'].includes('table_border') || field.classList['value'].includes('snake')) {
                                                         let high_score = document.querySelector('#high_score');
 
                                                         if (confirm(`Play again? \n Highest score was ${high_score.value}`)) {
@@ -184,7 +184,7 @@ window.onload = function initGame() {
                                                             default:
                                                                     return;
                                                     }
-                                            }, 300)
+                                            }, 100)
                                     }
 
                             }
