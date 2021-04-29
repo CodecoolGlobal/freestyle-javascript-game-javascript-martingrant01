@@ -112,10 +112,12 @@ window.onload = function initGame() {
                         snakeHead.removeAttribute('id');
 
                         function moveSnakeHead() {
+                                const end_of_snake = 0;
+                                const next_end_of_snake = 1;
+
                                 for (let field of fields) {
                                         if (field.dataset.pos) {
                                                 let increasedPos = parseInt(field.dataset.pos) + 1
-                                                //increasedPos ++
                                                 field.dataset.pos = increasedPos
                                         }
 
@@ -128,7 +130,7 @@ window.onload = function initGame() {
 
 
                                         }
-                                        if ((field.dataset.col == snake[0].dataset.col && field.dataset.row == snake[0].dataset.row)
+                                        if ((field.dataset.col == snake[end_of_snake].dataset.col && field.dataset.row == snake[end_of_snake].dataset.row)
                                         && !isGrowing) {
 
                                                 field.classList.remove('snake');
@@ -136,7 +138,7 @@ window.onload = function initGame() {
                                                 field.removeAttribute('data-pos');
 
                                         }
-                                        if (field.dataset.col == snake[1].dataset.col && field.dataset.row == snake[1].dataset.row) {
+                                        if (field.dataset.col == snake[next_end_of_snake].dataset.col && field.dataset.row == snake[next_end_of_snake].dataset.row) {
 
                                                 field.setAttribute('id', 'snake-end');
                                         }
@@ -149,6 +151,8 @@ window.onload = function initGame() {
 
                 }
                 let timer;
+                let previous_key = ''
+                let start_moving = false
                 window.addEventListener('keydown', function (event) {
                             event.preventDefault();
 
@@ -156,7 +160,31 @@ window.onload = function initGame() {
                                     let valid_keys = ['KeyS', 'ArrowDown', 'KeyW', 'ArrowUp', 'KeyA', 'ArrowLeft', 'KeyD', 'ArrowRight'];
                                     for (let valid_key of valid_keys) {
                                             if (event.code == valid_key) {
-                                                    directionOfSnake();
+                                                    if (!start_moving) {
+                                                        directionOfSnake();
+                                                        start_moving = true
+                                                        previous_key = event.code;
+                                                    }
+                                                    else if (previous_key == 'KeyD' && event.code != 'KeyA' ||
+                                                        previous_key == 'ArrowRight' && event.code != 'ArrowLeft') {
+                                                            previous_key = event.code;
+                                                            directionOfSnake();
+                                                    }
+                                                    else if (previous_key == 'KeyA' && event.code != 'KeyD'||
+                                                        previous_key == 'ArrowLeft' && event.code != 'ArrowRight') {
+                                                            previous_key = event.code;
+                                                            directionOfSnake();
+                                                    }
+                                                    else if (previous_key == 'KeyS' && event.code != 'KeyW'||
+                                                        previous_key == 'ArrowDown' && event.code != 'ArrowUp') {
+                                                            previous_key = event.code;
+                                                            directionOfSnake();
+                                                    }
+                                                    else if (previous_key == 'KeyW' && event.code != 'KeyS'||
+                                                        previous_key == 'ArrowUp' && event.code != 'ArrowDown') {
+                                                            previous_key = event.code;
+                                                            directionOfSnake();
+                                                    }
                                             }
                                     }
 
@@ -184,7 +212,7 @@ window.onload = function initGame() {
                                                             default:
                                                                     return;
                                                     }
-                                            }, 100)
+                                            }, 300)
                                     }
 
                             }
@@ -199,12 +227,6 @@ window.onload = function initGame() {
                 const cells = document.querySelectorAll('.table_col');
                 let get_random_cell = (amount_of_cells) => Math.floor(Math.random() * amount_of_cells);
                 let random_cell;
-                let border_coords = {
-                        min_col: 0,
-                        max_col: document.querySelector('.play_field').dataset.all_cols - 1,
-                        min_row: 0,
-                        max_row: document.querySelector('.play_field').dataset.all_rows - 1
-                }
 
                 do {
                         random_cell = get_random_cell(cells.length);
