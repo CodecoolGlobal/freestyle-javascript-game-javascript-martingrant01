@@ -37,7 +37,7 @@ window.onload = function initGame() {
                 while (orderedSnakeList.length < snake.length) {
                         let maxElement = snake[0];
                         for (let snakePartIndex=0; snakePartIndex < snake.length; snakePartIndex++) {
-                                if (maxElement.dataset.pos < snake[snakePartIndex].dataset.pos) {
+                                if (parseInt(maxElement.dataset.pos) < parseInt(snake[snakePartIndex].dataset.pos)) {
                                      maxElement = snake[snakePartIndex];
                                      maxElementIndex = snakePartIndex;
                                 }
@@ -50,6 +50,7 @@ window.onload = function initGame() {
 
         function snakeMovement(fields) {
                 function move(fields, direction, change) {
+                        let isGrowing = false;
                         let snake = sortPosition();
                         let snakeHead = document.querySelector('#snake-head');
                         let snakeHeadPosition = {
@@ -81,7 +82,6 @@ window.onload = function initGame() {
                                                         let high_score = document.querySelector('#high_score');
 
                                                         if (confirm(`Play again? \n Highest score was ${high_score.value}`)) {
-                                                                console.log('5564')
                                                                 window.location.replace('/')
                                                         }
                                                         else {
@@ -89,12 +89,13 @@ window.onload = function initGame() {
                                                         }
 
                                                 if (field.classList['value'].includes('apple')){
+                                                        isGrowing = true;
                                                         let score  = document.querySelector('#current_score');
                                                         let high_score = document.querySelector('#high_score');
 
                                                         increase_current_score(score);
 
-                                                        if (high_score.value < score.value) {
+                                                        if (parseInt(high_score.value) < parseInt(score.value)) {
                                                                 set_high_score(high_score);
                                                         }
 
@@ -108,16 +109,13 @@ window.onload = function initGame() {
 
                         checkNextField();
 
-                        //snakeHead.classList.remove('snake');
                         snakeHead.removeAttribute('id');
-                        //snakeHead.removeAttribute('data-pos');
-                        // snakeEnd.removeAttribute('id');
 
                         function moveSnakeHead() {
                                 for (let field of fields) {
                                         if (field.dataset.pos) {
-                                                let increasedPos = field.dataset.pos
-                                                increasedPos ++
+                                                let increasedPos = parseInt(field.dataset.pos) + 1
+                                                //increasedPos ++
                                                 field.dataset.pos = increasedPos
                                         }
 
@@ -130,7 +128,8 @@ window.onload = function initGame() {
 
 
                                         }
-                                        if (field.dataset.col == snake[0].dataset.col && field.dataset.row == snake[0].dataset.row) {
+                                        if ((field.dataset.col == snake[0].dataset.col && field.dataset.row == snake[0].dataset.row)
+                                        && !isGrowing) {
 
                                                 field.classList.remove('snake');
                                                 field.removeAttribute('id', 'snake-end');
