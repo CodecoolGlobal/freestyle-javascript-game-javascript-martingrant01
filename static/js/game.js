@@ -10,15 +10,47 @@ window.onload = function initGame() {
 
                 for (let field of fields) {
                         if (field.dataset.row === '5' && field.dataset.col === '5') {
+                                field.setAttribute('data-pos', 0)
                                 field.classList.add('snake');
                                 field.setAttribute('id', 'snake-head');
+                        }
+                        if (field.dataset.row === '5' && field.dataset.col === '4') {
+                                field.setAttribute('data-pos', 1)
+                                field.classList.add('snake');
+                        }
+                        if (field.dataset.row === '5' && field.dataset.col === '3') {
+                                field.setAttribute('data-pos', 2)
+                                field.classList.add('snake');
+                        }
+                        if (field.dataset.row === '5' && field.dataset.col === '2') {
+                                field.setAttribute('data-pos', 3)
+                                field.classList.add('snake');
+                                field.setAttribute('id', 'snake-end');
                         }
                 }
         }
 
-        function snakeMovement(fields) {
+        function sortPosition() {
+                let snake = Array.from(document.querySelectorAll('.snake'));
+                let orderedSnakeList = [];
+                let maxElementIndex;
+                while (orderedSnakeList.length < snake.length) {
+                        let maxElement = snake[0];
+                        for (let snakePartIndex=0; snakePartIndex < snake.length; snakePartIndex++) {
+                                if (maxElement.dataset.pos < snake[snakePartIndex].dataset.pos) {
+                                     maxElement = snake[snakePartIndex];
+                                     maxElementIndex = snakePartIndex;
+                                }
+                        }
+                        orderedSnakeList.push(maxElement);
+                        snake.splice(maxElementIndex, 1);
+                }
+                return orderedSnakeList
+        }
 
+        function snakeMovement(fields) {
                 function move(fields, direction, change) {
+                        let snake = sortPosition();
                         let snakeHead = document.querySelector('#snake-head');
                         let snakeHeadPosition = {
                                 row: parseInt(snakeHead.dataset.row),
@@ -76,14 +108,38 @@ window.onload = function initGame() {
 
                         checkNextField();
 
-                        snakeHead.classList.remove('snake');
+                        //snakeHead.classList.remove('snake');
                         snakeHead.removeAttribute('id');
+                        //snakeHead.removeAttribute('data-pos');
+                        // snakeEnd.removeAttribute('id');
 
                         function moveSnakeHead() {
                                 for (let field of fields) {
+                                        if (field.dataset.pos) {
+                                                let increasedPos = field.dataset.pos
+                                                increasedPos ++
+                                                field.dataset.pos = increasedPos
+                                        }
+
                                         if (field.dataset.col == snakeHeadPosition.col && field.dataset.row == snakeHeadPosition.row) {
+
                                                 field.classList.add('snake');
                                                 field.setAttribute('id', 'snake-head');
+                                                field.setAttribute('data-pos', 0);
+
+
+
+                                        }
+                                        if (field.dataset.col == snake[0].dataset.col && field.dataset.row == snake[0].dataset.row) {
+
+                                                field.classList.remove('snake');
+                                                field.removeAttribute('id', 'snake-end');
+                                                field.removeAttribute('data-pos');
+
+                                        }
+                                        if (field.dataset.col == snake[1].dataset.col && field.dataset.row == snake[1].dataset.row) {
+
+                                                field.setAttribute('id', 'snake-end');
                                         }
                                 }
 
@@ -112,28 +168,24 @@ window.onload = function initGame() {
                                                     switch (event.code) {
                                                             case 'KeyS':
                                                             case 'ArrowDown':
-                                                                    //console.log('back');
                                                                     move(fields, 'row', 1);
                                                                     break;
                                                             case 'KeyW':
                                                             case 'ArrowUp':
-                                                                    //console.log('up');
                                                                     move(fields, 'row', -1);
                                                                     break;
                                                             case 'KeyA':
                                                             case 'ArrowLeft':
-                                                                    //console.log('left');
                                                                     move(fields, 'col', -1);
                                                                     break;
                                                             case 'KeyD':
                                                             case 'ArrowRight':
-                                                                    //console.log('right');
                                                                     move(fields, 'col', 1);
                                                                     break;
                                                             default:
                                                                     return;
                                                     }
-                                            }, 200)
+                                            }, 300)
                                     }
 
                             }
@@ -158,10 +210,9 @@ window.onload = function initGame() {
                 do {
                         random_cell = get_random_cell(cells.length);
 
-                } while (cells[random_cell].dataset.col == border_coords.max_col ||
-                cells[random_cell].dataset.col == border_coords.min_col ||
-                cells[random_cell].dataset.row == border_coords.min_row ||
-                cells[random_cell].dataset.row == border_coords.max_row);
+                } while (cells[random_cell].classList["value"].includes('table_border') ||
+                    cells[random_cell].classList["value"].includes('snake')
+                    );
 
 
                 let place_of_apple = cells[random_cell];
