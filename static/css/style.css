@@ -40,6 +40,9 @@ body {
 .apple {
     background-color: red;
 }
+#snake-head {
+    background-color: darkmagenta;
+}
 
 
 /*Start_screen*/
@@ -80,6 +83,16 @@ button {
     font-size: 80px;
 }
 #back-main:hover {
+    color: darkgray;
+    font-size: 60px;
+}
+
+#high-main {
+    margin-left: 300px;
+    background-color: red;
+    margin-top: 100px;
+}
+#high-main:hover {
     color: darkgray;
     font-size: 60px;
 }

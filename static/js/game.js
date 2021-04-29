@@ -1,6 +1,7 @@
 window.onload = function initGame() {
         let fields = document.querySelectorAll('.table_col');
 
+        const name = prompt("Please enter your name", 'Should be your name');
         createSnake(fields);
         snakeMovement(fields);
         place_apple_on_map();
@@ -81,16 +82,17 @@ window.onload = function initGame() {
                                         if (field.dataset.col == snakeHeadPosition.col && field.dataset.row == snakeHeadPosition.row) {
                                                 if (field.classList['value'].includes('table_border') || field.classList['value'].includes('snake')) {
                                                         let high_score = document.querySelector('#high_score');
-                                                        field.style.backgroundColor = 'purple';
+                                                        field.style.backgroundColor = 'orange';
 
                                                         setTimeout(() => {
-                                                                if (confirm(`Play again? \n Highest score was ${high_score.value}`))
+                                                                if (confirm(`Play again? \n ${name}, your score was ${high_score.value}!`))
                                                                 {
-                                                                        window.location.replace('/')
+                                                                        location.reload()
                                                                 }
                                                                 else
                                                                 {
-                                                                        location.reload()
+                                                                        window.location.replace('/')
+
                                                                 }
                                                         }, 100);
 
@@ -221,7 +223,7 @@ window.onload = function initGame() {
                                                             default:
                                                                     return;
                                                     }
-                                            }, 300)
+                                            }, 200)
                                     }
 
                             }
