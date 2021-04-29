@@ -2,11 +2,12 @@ body {
     display: flex;
     position: relative;
     justify-content: center;
-    background-color: white;
+    background-color: lightyellow;
     font-size: 20px;
     color: black;
 }
 
+/*Game_screen*/
 .play_field {
    display: table;
     position: absolute;
@@ -38,4 +39,65 @@ body {
 }
 .apple {
     background-color: red;
+}
+
+.special {
+    background-color: aquamarine;
+}
+
+#snake-head {
+    background-color: darkmagenta;
+}
+
+
+/*Start_screen*/
+body {
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+button {
+    position: absolute;
+    border-radius: 30%;
+    size: 150px;
+    top: 811px;
+    font-size: 50px;
+    font-style: italic;
+}
+#play {
+    right: 1100px;
+    background-color: lawngreen;
+}
+#play:hover {
+    color: darkgray;
+    font-size: 80px;
+}
+#back-main {
+    right: 450px;
+    background-color: blue;
+    bottom: 0;
+}
+
+#highscore {
+    left: 1100px;
+    background-color: palevioletred;
+}
+#highscore:hover {
+    color: darkgray;
+    font-size: 80px;
+}
+#back-main:hover {
+    color: darkgray;
+    font-size: 60px;
+}
+
+#high-main {
+    margin-left: 300px;
+    background-color: red;
+    margin-top: 100px;
+}
+#high-main:hover {
+    color: darkgray;
+    font-size: 60px;
 }

@@ -1,43 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-
-    <label for='current_score'>Current score:</label>&nbsp;
-    <input class="current_score" id='current_score' value="0" disabled>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <label for='high_score'>Highest score:</label>&nbsp;
-    <input class="high_score" id="high_score" value="0" disabled>
-
-    <div class="play_field" data-all_rows = '{{ rows }}' data-all_cols = '{{ cols }}'>
-        {% for row in range(rows) %}
-                    <div class="table_row">
-                {% if row % 2 == 0 %}
-                    {% for col in range(cols) %}
-                        {% if col == 0 or col == cols - 1 or row == 0  or row == rows - 1 %}
-                            <div class="table_col table_border" data-row ='{{ row }}' data-col = '{{ col }}'></div>
-                        {% elif col % 2 == 0 %}
-                            <div class="table_col light" data-row ='{{ row }}' data-col = '{{ col }}'></div>
-                        {% else %}
-                            <div class="table_col dark" data-row = '{{ row }}' data-col = '{{ col }}'></div>
-                        {% endif %}
-
-                    {% endfor %}
-                {% else %}
-                    {% for col in range(cols) %}
-                        {% if col == 0 or col == cols - 1 or row == 0  or row == rows - 1 %}
-                            <div class="table_col table_border" data-row = '{{ row }}' data-col = '{{ col }}'></div>
-                        {% elif col % 2 == 0 %}
-                            <div class="table_col dark" data-row ='{{ row }}' data-col = '{{ col }}'></div>
-                        {% else %}
-                            <div class="table_col light" data-row = '{{ row }}' data-col = '{{ col }}'></div>
-                        {% endif %}
-
-                    {% endfor %}
-                {% endif %}
-
-                </div>
-        {% endfor %}
-    </div>
-
-
+    <img src="https://cafans.b-cdn.net/images/Category_102735/subcat_159451/n50Dm9Yu_1208141804401.jpg">
+    <a href="/game"><button id="play" type="submit">Let's play</button></a>
+    <a href="/highscore"><button id="highscore" type="submit">Highscore</button></a>
 {% endblock %}

@@ -1,6 +1,7 @@
 window.onload = function initGame() {
         let fields = document.querySelectorAll('.table_col');
 
+        const name = prompt("Please enter your name", 'Should be your name');
         createSnake(fields);
         snakeMovement(fields);
         place_apple_on_map();
@@ -62,46 +63,60 @@ window.onload = function initGame() {
 
                         function checkNextField() {
 
-                                function increase_current_score(score) {
+                                function increase_current_score(score, increase_by) {
 
-                                        let increased_score = parseInt(score.value) + 1
+                                        let increased_score = parseInt(score.value) + parseInt(increase_by)
 
                                         score.value = increased_score
 
-                                }
-                                function set_high_score(high_score) {
-
-                                        let increased_score = parseInt(high_score.value) + 1;
-
-                                        high_score.value = increased_score;
                                 }
 
                                 for (let field of fields) {
                                         if (field.dataset.col == snakeHeadPosition.col && field.dataset.row == snakeHeadPosition.row) {
                                                 if (field.classList['value'].includes('table_border') || field.classList['value'].includes('snake')) {
                                                         let high_score = document.querySelector('#high_score');
+                                                        field.style.backgroundColor = 'orange';
 
-                                                        if (confirm(`Play again? \n Highest score was ${high_score.value}`)) {
-                                                                window.location.replace('/')
-                                                        }
-                                                        else {
-                                                                clearInterval(timer)}
-                                                        }
+                                                        setTimeout(() => {
+                                                                if (confirm(`Play again? \n ${name}, your score was ${high_score.value}!`))
+                                                                {
+                                                                        location.reload()
+                                                                }
+                                                                else
+                                                                {
+                                                                        window.location.replace('/')
 
-                                                if (field.classList['value'].includes('apple')){
+                                                                }
+                                                        }, 100);
+
+                                                }
+
+                                                if (field.classList['value'].includes('apple') || field.classList['value'].includes('special')) {
                                                         isGrowing = true;
-                                                        let score  = document.querySelector('#current_score');
+                                                        let score = document.querySelector('#current_score');
                                                         let high_score = document.querySelector('#high_score');
 
-                                                        increase_current_score(score);
+                                                        if (field.classList['value'].includes('apple')) {
+                                                                increase_current_score(score, 1);
+                                                                field.classList.remove('apple');
+                                                                place_apple_on_map();
+                                                        } else {
+                                                                increase_current_score(score, 2)
+                                                                field.classList.remove('special');
+                                                                }
+
+                                                        score = document.querySelector('#current_score');
+                                                        if (parseInt(score.value) % 10 === 0) {
+                                                                        place_special_food()
+                                                                }
 
                                                         if (parseInt(high_score.value) < parseInt(score.value)) {
-                                                                set_high_score(high_score);
+                                                                high_score.value = score.value;
                                                         }
-
-                                                        field.classList.remove('apple');
-                                                        place_apple_on_map();
                                                 }
+
+
+
 
                                         }
                                 }
@@ -212,7 +227,7 @@ window.onload = function initGame() {
                                                             default:
                                                                     return;
                                                     }
-                                            }, 300)
+                                            }, 200)
                                     }
 
                             }
@@ -240,6 +255,26 @@ window.onload = function initGame() {
                 place_of_apple.classList.add('apple');
 
 
+        }
+
+        function place_special_food() {
+                const cells = document.querySelectorAll('.table_col');
+                let get_random_cell = (amount_of_cells) => Math.floor(Math.random() * amount_of_cells);
+                let random_cell;
+
+                do {
+                        random_cell = get_random_cell(cells.length);
+
+                } while (cells[random_cell].classList["value"].includes('table_border') ||
+                    cells[random_cell].classList["value"].includes('snake') ||
+                    cells[random_cell].classList["value"].includes('apple')
+
+                    );
+
+
+                let place_of_special = cells[random_cell];
+                place_of_special.classList.add('special');
+                setTimeout(function() {place_of_special.classList.remove('special');}, 5000)
         }
 
 }
