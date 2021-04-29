@@ -69,6 +69,7 @@ window.onload = function initGame() {
                                         score.value = increased_score
 
                                 }
+
                                 function set_high_score(high_score) {
 
                                         let increased_score = parseInt(high_score.value) + 1;
@@ -80,17 +81,18 @@ window.onload = function initGame() {
                                         if (field.dataset.col == snakeHeadPosition.col && field.dataset.row == snakeHeadPosition.row) {
                                                 if (field.classList['value'].includes('table_border') || field.classList['value'].includes('snake')) {
                                                         let high_score = document.querySelector('#high_score');
+                                                        field.style.backgroundColor = 'purple';
 
-                                                        if (confirm(`Play again? \n Highest score was ${high_score.value}`)) {
-                                                                window.location.replace('/')
-                                                        }
-                                                        else {
-                                                                clearInterval(timer)}
-                                                        }
+                                                        setTimeout(() => {
+                                                                if (confirm(`Play again? \n Highest score was ${high_score.value}`)) {
+                                                                        window.location.replace('/')
+                                                                }
+                                                        }, 100);
+                                                }
 
-                                                if (field.classList['value'].includes('apple')){
+                                                if (field.classList['value'].includes('apple')) {
                                                         isGrowing = true;
-                                                        let score  = document.querySelector('#current_score');
+                                                        let score = document.querySelector('#current_score');
                                                         let high_score = document.querySelector('#high_score');
 
                                                         increase_current_score(score);
@@ -102,6 +104,7 @@ window.onload = function initGame() {
                                                         field.classList.remove('apple');
                                                         place_apple_on_map();
                                                 }
+
 
                                         }
                                 }
