@@ -10,37 +10,35 @@ window.onload = function initGame() {
 
                 for (let field of fields) {
                         if (field.dataset.row === '5' && field.dataset.col === '5') {
+                                field.setAttribute('data-pos', 1)
                                 field.classList.add('snake');
-                                field.setAttribute('id', 'snake-head');
+
                         }
                         if (field.dataset.row === '5' && field.dataset.col === '4') {
+                                field.setAttribute('data-pos', 2)
                                 field.classList.add('snake');
                         }
                         if (field.dataset.row === '5' && field.dataset.col === '3') {
+                                field.setAttribute('data-pos', 3)
                                 field.classList.add('snake');
                         }
                         if (field.dataset.row === '5' && field.dataset.col === '2') {
+                                field.setAttribute('data-pos', 4)
                                 field.classList.add('snake');
-                                field.setAttribute('id', 'snake-end');
                         }
                 }
         }
 
         function snakeMovement(fields) {
                 function move(fields, direction, change) {
-                        let snake = document.querySelectorAll('.snake');
-                        let snakeHead = document.querySelector('#snake-head');
-                        let snakeHeadPosition = {
-                                row: parseInt(snakeHead.dataset.row),
-                                col: parseInt(snakeHead.dataset.col)
-                        }
+                        let snake = document.querySelectorAll('[data-pos]');
 
-                        if (direction === 'col' ? snakeHeadPosition.col += change : snakeHeadPosition.row += change) ;
-
+                        let snakeHead = document.querySelectorAll('[data-pos]')[snake.length-1];
 
                         function checkNextField() {
                                 for (let field of fields) {
-                                        if (field.dataset.col == snakeHeadPosition.col && field.dataset.row == snakeHeadPosition.row) {
+
+                                        if (field.dataset.col == snakeHead.dataset.col && field.dataset.row == snakeHead.dataset.row) {
                                                 if (field.classList['value'].includes('table_border')) {
                                                         if (confirm('Play again?')) {
                                                                 window.location.replace('/')
@@ -57,67 +55,25 @@ window.onload = function initGame() {
 
                         checkNextField();
 
-                        //snakeHead.classList.remove('snake');
-                        snakeHead.removeAttribute('id');
-                        // snakeEnd.removeAttribute('id');
 
                         function moveSnakeHead() {
-                                for (let field of fields) {
-                                        if (field.dataset.col == snakeHeadPosition.col && field.dataset.row == snakeHeadPosition.row) {
 
-                                                field.classList.add('snake');
-                                                field.setAttribute('id', 'snake-head');
-                                                snake = document.querySelectorAll('.snake');
-                                                let previous_snake_end_index;
+                                console.log(snake)
+                                debugger;
+                                for (let snake_part of snake) {
+                                        snake_part.classList.remove('snake');
 
-                                                for (let index=0; index<snake.length ; index++) {
-                                                        if (snake[index].id === 'snake-end') {
-                                                                 previous_snake_end_index = index;
-                                                        }
+                                        let snake_col = parseInt(snake_part.dataset.col);
+                                        let snake_row = parseInt(snake_part.dataset.row);
+
+                                        if (direction === 'col' ? snake_col += change : snake_row += change);
+
+                                        for (let field of fields) {
+                                                if (field.dataset.col == snake_col && field.dataset.row == snake_row) {
+                                                        field.classList.add('snake');
                                                 }
-
-
-                                                let head_index, end_index, next_index;
-
-                                                for (let index=0; index<snake.length ; index++) {
-                                                        if (snake[index].id === 'snake-head') {
-                                                                head_index = index
-
-                                                                // right, down
-                                                                if (head_index == snake.length - 1) {
-                                                                        end_index = 0
-                                                                        next_index = 0
-                                                                }
-                                                                // up, left
-                                                                else if (head_index == 0) {
-                                                                        if (previous_snake_end_index == snake.length - 1) {
-                                                                                end_index = previous_snake_end_index
-                                                                                next_index = snake.length - 2
-                                                                        } else {
-                                                                                end_index = previous_snake_end_index;
-                                                                                next_index = previous_snake_end_index;
-                                                                        }
-                                                                }
-
-
-
-                                                        }
-                                                }
-
-                                                snake[end_index].removeAttribute('id');
-                                                snake[end_index].classList.remove('snake');
-
-                                                snake = document.querySelectorAll('.snake');
-                                                snake[next_index].setAttribute('id', 'snake-end');
-                                                console.log(end_index, next_index)
-                                                console.log(snake);
-
-
-
-                                                break;
                                         }
                                 }
-
                         }
 
                         moveSnakeHead()
