@@ -10,25 +10,50 @@ window.onload = function initGame() {
 
                 for (let field of fields) {
                         if (field.dataset.row === '5' && field.dataset.col === '5') {
+                                field.setAttribute('data-pos', 0)
                                 field.classList.add('snake');
                                 field.setAttribute('id', 'snake-head');
                         }
                         if (field.dataset.row === '5' && field.dataset.col === '4') {
+                                field.setAttribute('data-pos', 1)
                                 field.classList.add('snake');
                         }
                         if (field.dataset.row === '5' && field.dataset.col === '3') {
+                                field.setAttribute('data-pos', 2)
                                 field.classList.add('snake');
                         }
                         if (field.dataset.row === '5' && field.dataset.col === '2') {
+                                field.setAttribute('data-pos', 3)
                                 field.classList.add('snake');
                                 field.setAttribute('id', 'snake-end');
                         }
                 }
         }
 
+        function sortPosition() {
+                let snake = document.querySelectorAll('.snake');
+                let orderedSnakeList = [];
+                let snakeLength = snake.length;
+                let maxElementIndex;
+                while (orderedSnakeList.length < snakeLength) {
+                        let maxElement = snake[0];
+                        for (let snakePartIndex=0; snakePartIndex < snakeLength; snakePartIndex++) {
+                                if (maxElement.dataset.pos < snake[snakePartIndex].dataset.pos) {
+                                     maxElement = snake[snakePartIndex];
+                                     maxElementIndex = snakePartIndex;
+                                }
+                        }
+                        orderedSnakeList.push(maxElement);
+                        snake = snake.splice(maxElementIndex, 1);
+                        console.log(orderedSnakeList)
+                }
+
+        }
+
         function snakeMovement(fields) {
                 function move(fields, direction, change) {
                         let snake = document.querySelectorAll('.snake');
+                        sortPosition();
                         let snakeHead = document.querySelector('#snake-head');
                         let snakeHeadPosition = {
                                 row: parseInt(snakeHead.dataset.row),
@@ -109,8 +134,8 @@ window.onload = function initGame() {
 
                                                 snake = document.querySelectorAll('.snake');
                                                 snake[next_index].setAttribute('id', 'snake-end');
-                                                console.log(end_index, next_index)
-                                                console.log(snake);
+                                                //console.log(end_index, next_index)
+                                                //console.log(snake);
 
 
 
